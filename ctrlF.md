@@ -128,3 +128,85 @@ Pessoa { nome: "João Silva", data_nascimento: 1995-05-20, iban: "PT50 0002 0123
     saldo: 1500.75,
 }
 ```
+
+# hashMap
+
+## exemplo 1 : Contar elementos de items
+
+```rs
+use std::collections::HashMap;
+
+fn main() {
+    let mut map = HashMap::new();
+
+    let items = vec!["a", "b", "a", "c", "a", "b"];
+
+    for item in items {
+        *map.entry(item).or_insert(0) += 1;
+    }
+
+    println!("{:?}", map);
+}
+```
+
+## exemplo 2.1 : elemento com mais aparições (count hashMap) 
+```rs
+use std::collections::HashMap;
+
+fn main() {
+    let mut map = HashMap::new();
+
+    let items = vec!["a", "b", "a", "c", "a", "b"];
+
+    for item in items {
+        *map.entry(item).or_insert(0) += 1;
+    }
+
+    let max = map.iter().max_by_key(|&(_, count)| count);
+
+    if let Some((key, count)) = max {
+        println!("Mais frequente: {} ({})", key, count);
+    }
+}
+```
+
+## exemplo 2.2 : atenção ao output de map.iter()...
+
+```rs
+use std::collections::HashMap;
+
+fn main() {
+    let nums = vec![1, 2, 1, 3, 1, 2];
+
+    let mut map = HashMap::new();
+
+    // Contar frequências
+    for n in nums {
+        *map.entry(n).or_insert(0) += 1;
+    }
+
+    println!("Mapa: {:?}", map);
+
+    // Encontrar o elemento com mais ocorrências
+    let max = map.iter().max_by_key(|&(_, count)| count);
+
+    match max {
+        // ⚠️ Aqui está o ponto importante
+        Some((&key, &count)) => {
+            println!("Mais frequente: {} ({} vezes)", key, count);
+        }
+        None => {
+            println!("Mapa vazio");
+        }
+    }
+}
+```
+
+```
+map.iter() devolve - (&i32, &i32) 
+
+max_by_key() devolve - Option<(&i32, &i32)>
+
+Ou seja para aceder precisas de: Some((&key, &count))
+```
+
