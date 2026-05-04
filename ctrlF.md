@@ -1,4 +1,6 @@
 # Some() || Option<T> || Optional value
+
+## Some() hello world
 ```rs
 fn main() {
     let nome: Option<&str> = Some("João");
