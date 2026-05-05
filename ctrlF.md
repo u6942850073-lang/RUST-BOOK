@@ -1,3 +1,51 @@
+# String ops I (coisas fáceis)
+
+## push (for a single char) 
+```
+let mut s = String::from("Hi");
+s.push('!');
+println!("{}", s); // Hi!
+```
+
+## push_str (for string slices) 
+
+```rs
+let mut s = String::from("Hello");
+s.push_str(" world");
+println!("{}", s); // Hello world
+```
+
+## Operator '+' (concatenation) 
+```rs
+let s1 = String::from("Hello ");
+let s2 = String::from("world");
+let s3 = s1 + &s2;
+println!("{}", s3);
+```
+## format! 
+```rs
+let s1 = String::from("Hello");
+let s2 = String::from("world");
+let s3 = format!("{} {}", s1, s2);
+println!("{}", s3);
+```
+
+## pop (retona Some()) 
+
+```rs
+fn main() {
+    let mut s = String::from("Olá!");
+    
+    let last = s.pop();
+
+    println!("{:?}", last); // Some('!')
+    println!("{}", s);      // "Olá"
+}
+``` 
+
+
+
+
 # Some() || Option<T> || Optional value
 
 ## Some() hello world
@@ -31,7 +79,6 @@ fn main() {
 unwrap serve para sacar o valor de some()
 mas se deres unwrap de algo com None dá crash 
 ```
-
 
 # STACK PUSH POP || LIKE C++ VECTOR
 
