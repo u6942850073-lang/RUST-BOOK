@@ -43,6 +43,21 @@ fn main() {
 }
 ``` 
 
+## exemplo  : is_palyndrome
+
+```rs
+impl Solution {
+    pub fn is_palindrome(s: String) -> bool {
+        let mut myS = String::from("");
+        for c in s.chars() {
+            if (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9') {
+                myS.push(c.to_ascii_lowercase());
+            }
+        }
+        return myS == myS.chars().rev().collect::<String>();
+    }
+}
+```
 
 
 
