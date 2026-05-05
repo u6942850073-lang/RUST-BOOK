@@ -288,6 +288,26 @@ impl Solution {
     }
 }
 ```
+# Rc<T> Reference Counted pointer 
+
+```rs
+use std::rc::Rc;
+
+fn main() {
+    let a = Rc::new(String::from("ola"));
+
+    let b = Rc::clone(&a);
+    let c = Rc::clone(&a);
+
+    println!("{}", a);
+    println!("{}", b);
+    println!("{}", c);
+}
+
+// Semelhante a shared_ptr do c++
+// Mas não é thread safety, é mais explicito e seguro
+```
+
 
 
 
