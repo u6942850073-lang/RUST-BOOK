@@ -59,7 +59,58 @@ impl Solution {
 }
 ```
 
+# traits I : default behaviour, implementacao para structs particulares 
 
+## Primeiro exemplo 
+
+```rs
+// Definição do trait com implementação default
+trait Falar {
+    fn falar(&self) -> String {
+        String::from("<este animal não sabe falar>")
+    }
+}
+
+// Structs
+struct Pessoa {
+    nome: String,
+}
+
+struct Cao {
+    nome: String,
+}
+
+struct Inseto;
+
+// Implementações do trait
+
+// Pessoa com comportamento customizado
+impl Falar for Pessoa {
+    fn falar(&self) -> String {
+        format!("Olá, eu sou a pessoa {}", self.nome)
+    }
+}
+
+// Cão com comportamento customizado
+impl Falar for Cao {
+    fn falar(&self) -> String {
+        format!("{} diz: Au au!", self.nome)
+    }
+}
+
+// Inseto usa o default (não implementa falar)
+impl Falar for Inseto {}
+
+fn main() {
+    let p = Pessoa { nome: String::from("Ana") };
+    let c = Cao { nome: String::from("Rex") };
+    let i = Inseto;
+
+    println!("{}", p.falar());
+    println!("{}", c.falar());
+    println!("{}", i.falar());
+}
+```
 
 # Some() || Option<T> || Optional value
 
