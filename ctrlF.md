@@ -210,3 +210,84 @@ max_by_key() devolve - Option<(&i32, &i32)>
 Ou seja para aceder precisas de: Some((&key, &count))
 ```
 
+# borrow() 
+
+## ex1 is same tree (is_same_tree) 
+
+```rs
+use std::rc::Rc;
+use std::cell::RefCell;
+
+impl Solution {
+    pub fn is_same_tree(
+        p: Option<Rc<RefCell<TreeNode>>>, 
+        q: Option<Rc<RefCell<TreeNode>>>
+    ) -> bool {
+        match (p, q) {
+            (None, None) => true,
+            (Some(p_node), Some(q_node)) => {
+                let p_ref = p_node.borrow();
+                let q_ref = q_node.borrow();
+
+                p_ref.val == q_ref.val
+                    && Self::is_same_tree(p_ref.left.clone(), q_ref.left.clone())
+                    && Self::is_same_tree(p_ref.right.clone(), q_ref.right.clone())
+            }
+            _ => false,
+        }
+    }
+}
+```
+
+## ex2 : borrow() : Aceder a dados dentro de RefCell
+
+```
+use std::cell::RefCell;
+
+fn main() {
+    let x = RefCell::new(10);
+
+    let v = x.borrow();   // empréstimo imutável
+    println!("{}", *v);   // 10
+}
+```
+
+
+
+## ex3: borrow_mut() : Acesso mutável ao valor dentro de RefCell
+
+```rs
+use std::cell::RefCell;
+
+fn main() {
+    let x = RefCell::new(10);
+
+    {
+        let mut v = x.borrow_mut(); // empréstimo mutável
+        *v += 5;
+    } // o borrow termina aqui
+
+    println!("{}", x.borrow()); // 15
+}
+```
+
+## ex4: chamadas recursivas tradicionais (função solta) 
+
+```rs
+fn factorial(n: i32) -> i32 {
+    if n <= 1 { 1 } else { n * factorial(n - 1) }
+}
+```
+
+## ex5: chamadas recursivas dentro de impl
+
+```rs
+impl Solution {
+    pub fn is_same_tree(...) -> bool {
+        Self::is_same_tree(...) // necessário
+    }
+}
+```
+
+
+
